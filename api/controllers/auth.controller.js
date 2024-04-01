@@ -53,7 +53,7 @@ export const google = async (req, res, next) => {
                 Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
             const newUser = new User({
-                username:
+                userName:
                     req.body.name.split(' ').join('').toLowerCase() +
                     Math.random().toString(36).slice(-4),
                 email: req.body.email,
@@ -72,3 +72,13 @@ export const google = async (req, res, next) => {
         next(error);
     }
 };
+
+
+export const signOut = async (req, res, next) => {
+    try {
+        res.clearCookie('access_token');
+        res.status(200).json({ message: "User has been logged out!" })
+    } catch (error) {
+        next(error)
+    }
+}
